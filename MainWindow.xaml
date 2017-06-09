@@ -1,0 +1,25 @@
+﻿<Window x:Class="lab7.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab7"
+        xmlns:oxy="http://oxyplot.codeplex.com"
+        mc:Ignorable="d"
+        Title="Poisson Gen" Height="592.475" Width="1117.5">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="516*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <oxy:Plot x:Name="Plot1" Title="Density" Model="{Binding PlotModel}" Margin="10,63,10,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+        <Button x:Name="button2" Content="Poisson Distribution" Margin="27,21,0,0" VerticalAlignment="Top" Width="123" Height="20" Click="button2_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" HorizontalAlignment="Left"/>
+        <Button x:Name="buttonQR" Content="QR" HorizontalAlignment="Left" Margin="171,21,0,0" VerticalAlignment="Top" Width="75" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Click="buttonQR_Click" Height="20"/>
+        <TextBlock x:Name="QRPoisson" HorizontalAlignment="Left" Margin="278,21,0,0" TextWrapping="Wrap" Text="Lambda (QR)" VerticalAlignment="Top" Height="20" Width="70"/>
+        <TextBox x:Name="PoissonFromQR" HorizontalAlignment="Left" Height="20" Margin="456,20,0,0" TextWrapping="Wrap" Text="Poisson val from QR" VerticalAlignment="Top" Width="156" RenderTransformOrigin="-0.167,0.3"/>
+        <TextBox x:Name="kParameter" HorizontalAlignment="Left" Height="20" Margin="384,20,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="45"/>
+        <TextBlock x:Name="TextBlockLicense" HorizontalAlignment="Left" Margin="814,20,0,0" TextWrapping="Wrap" Text="License: http://www.apache.org/licenses/LICENSE-2.0" VerticalAlignment="Top" Width="275" Height="20"/>
+    </Grid>
+</Window>
