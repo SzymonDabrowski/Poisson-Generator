@@ -65,14 +65,11 @@ namespace lab7
             file.Close();
 
             oxyPlotModel.plot(listY, listXdensity);
-            OxyPlot.Wpf.PngExporter.Export(oxyPlotModel.PlotModel, $@"\drawings\density{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day} {DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}.png", 1600, 1600, OxyPlot.OxyColors.White, 96); // delete when one oxyPlotModel used
-            //oxyPlotModel1.plot(listY, listXcumultative); // make it on oxyPlotModel
-            //OxyPlot.Wpf.PngExporter.Export(oxyPlotModel1.PlotModel, $@"C:\Users\ASUS\Desktop\drawings\cumultative{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day} {DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}.png", 1600, 1600, OxyPlot.OxyColors.White, 96);
+            OxyPlot.Wpf.PngExporter.Export(oxyPlotModel.PlotModel, $@"\drawings\density{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day} {DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}.png", 1600, 1600, OxyPlot.OxyColors.White, 96);
             #endregion
 
             //opening second window with cumultative plot
             WindowDistribution newWindow = new WindowDistribution(listY, listXcumultative);
-            //newWindow.DataContext = this; ?
             newWindow.Show();  
         }
         
@@ -81,7 +78,7 @@ namespace lab7
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.DefaultExt = "jpg";
-                openFileDialog.Filter = "JPEG (*.jpg)|*.jpg|All files (*.*)|*.*"; //jpg too
+                openFileDialog.Filter = "JPEG (*.jpg)|*.jpg|All files (*.*)|*.*";
                 if (openFileDialog.ShowDialog() == true)
                 {
                     IBarcodeReader reader = new ZXing.BarcodeReader();
@@ -103,7 +100,7 @@ namespace lab7
                     }
                     else
                     {
-                        k = int.Parse(kParameter.Text, System.Globalization.CultureInfo.InvariantCulture); // is ToString() necessary?
+                        k = int.Parse(kParameter.Text, System.Globalization.CultureInfo.InvariantCulture);
                     }
 
                     PoissonFromQR.Text = poissonQR(lambda, k).ToString();
@@ -112,7 +109,7 @@ namespace lab7
         }
 
         #region functions made for buttonQR_Click
-        private static double factorial(int k)
+        private static double factorial(int k) // recursive is slower!
         {
             int result = 1;
             if (k == 0 || k == 1)
@@ -150,17 +147,11 @@ namespace lab7
     #region generator classes
     public class GenerateRandom : IGenerateRandom
     {
-        public double[] randomIntArray; // not encapsulated yet, problems with one array in code
- 
-        //public double this[int index]
-        //{
-        //    get { return randomIntArray[index]; }
-        //    set { randomIntArray[index] = value; }
-        //}
+        public double[] randomIntArray; // not encapsulated yet, use method, not indexer!
 
-        public void generateRandom() // may be private w.o. interface!
+        public void generateRandom() 
         {
-            int highestInt = (int)Math.Pow(2, 21);
+            int highestInt = (int)Math.Pow(2, 21); // may be bigger as well
             double modulo = Math.Pow(10, 6);
             double div = Math.Pow(10, 6);
             double auxiliary;
@@ -259,10 +250,10 @@ namespace lab7
         private void SetUpLegend()
         {
             plotModel.LegendTitle = "Legenda"; //Tytuł legendy 
-            plotModel.LegendOrientation = OxyPlot.LegendOrientation.Horizontal; //Orientacja pozioma 
+            plotModel.LegendOrientation = OxyPlot.LegendOrientation.Horizontal; 
             plotModel.LegendPlacement = OxyPlot.LegendPlacement.Outside; 
             plotModel.LegendPosition = OxyPlot.LegendPosition.TopRight; 
-            plotModel.LegendBackground = OxyPlot.OxyColor.FromAColor(200, OxyPlot.OxyColors.White);//Tło białe 
+            plotModel.LegendBackground = OxyPlot.OxyColor.FromAColor(200, OxyPlot.OxyColors.White);
             plotModel.LegendBorder = OxyPlot.OxyColors.Black; //Ramka
         }
 
@@ -289,9 +280,9 @@ namespace lab7
 
         public void plot(double[] X, double[] Y)
         {
-            this.PlotModel = new OxyPlot.PlotModel();  //Usunięcie ustawionych parametrów z poprzedniego uruchomienia metody  
+            this.PlotModel = new OxyPlot.PlotModel();  // reset previously set parameters
             plotModel.Series = new System.Collections.ObjectModel.Collection<OxyPlot.Series.Series> { };
-            plotModel.Axes = new System.Collections.ObjectModel.Collection<OxyPlot.Axes.Axis> { }; //Graficzne ustawienia wykresów  
+            plotModel.Axes = new System.Collections.ObjectModel.Collection<OxyPlot.Axes.Axis> { }; //graphical setting of plot
             seriesPoints = new OxyPlot.Series.LineSeries
             {
                 MarkerType = plotPoints[2],
@@ -300,12 +291,12 @@ namespace lab7
                 Title = "PoissonValues" //series title
             };
 
-            //Uzupełnianie danych
+            // data complementing
             for (var itX = 0; itX < X.Length; itX++)
                      seriesPoints.Points.Add(new OxyPlot.DataPoint(X[itX], Y[itX]));
 
             plotModel.Series.Add(seriesPoints);
-            //Opis i parametry osi wykresu  
+            
             var xAxis = new OxyPlot.Axes.LinearAxis(OxyPlot.Axes.AxisPosition.Bottom, "X")
             {
                 MajorGridlineStyle = OxyPlot.LineStyle.Solid,
